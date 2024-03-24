@@ -16,18 +16,18 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/counter" element={<Counter/>} />
+        <Route path="/counter" element={<Counter />} />
         <Route path="/effect-1" element={<EffectOne />} />
-        <Route path="/effect-2" element={<EffectTwo/>}/>
-        <Route path="/effect-3" element={<EffectThree/>}/>
-        <Route path="/effect-4" element={<EffectFour/>}/>
-        <Route path="/welcome" element={<Welcome/>}/>
-        <Route path="/Register" element={<Register/>}/>
-        <Route path='/counter-redux' element={<CounterRedux/>} />
-        <Route path='/use-reducer' element={<UseReducer/>} />
-        <Route path='/use-memo' element={<UseMemo/>} />
-        <Route path='/use-callback' element={<UseCallback/>} />
+        <Route path="/effect-2" element={<EffectTwo />} />
+        <Route path="/effect-3" element={<EffectThree />} />
+        <Route path="/effect-4" element={<EffectFour />} />
+        <Route path="/welcome" element={<Welcome />} />
+        <Route path="/Register" element={<Register />} />
+        <Route path="/counter-redux" element={<CounterRedux />} />
+        <Route path="/use-reducer" element={<UseReducer />} />
+        <Route path="/use-memo" element={<UseMemo />} />
       </Routes>
+      <UseCallback />
     </div>
   );
 }
