@@ -10,6 +10,7 @@ import Register from "./components/02-03/06-03/Register";
 import CounterRedux from "./components/02-03/20-03/CounterRedux";
 import UseReducer from "./components/02-03/09-03/UseReducer";
 import UseMemo from "./components/02-03/22-03/Usememo";
+import UseCallback from "./components/02-03/23-03/UseCallback";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path='/counter-redux' element={<CounterRedux/>} />
         <Route path='/use-reducer' element={<UseReducer/>} />
         <Route path='/use-memo' element={<UseMemo/>} />
+        <Route path='/use-callback' element={<UseCallback/>} />
       </Routes>
     </div>
   );
