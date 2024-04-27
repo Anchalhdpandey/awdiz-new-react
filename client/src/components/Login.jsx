@@ -1,64 +1,54 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { AuthContext } from "./02-03/context/AuthContext";
 import axios from "axios";
 
-function Register() {
+function Login() {
+  const { LOGIN } = useContext(AuthContext);
   const router = useNavigate();
   const [userData, setUserData] = useState({
-    name: "",
     email: "",
     password: "",
-    confirmPassword: "",
   });
-  console.log(userData, "userData");
+  //   console.log(userData, "userData");
   function handleChange(event) {
     setUserData({ ...userData, [event.target.name]: event.target.value });
   }
 
   async function handleSubmit(event) {
     event.preventDefault();
-    if (
-      userData.name &&
-      userData.email &&
-      userData.password &&
-      userData.confirmPassword
-    ) {
+    if (userData.email && userData.password) {
       try {
-        const response = await axios.post('http://localhost:3001/api/v1/auth/register', { userData })
+        const response = await axios.post(
+          "http://localhost:3001/api/v1/auth/login",
+          { userData },
+          { withCredentials: true }
+        );
         // const response = {
-        //   data: { success: true, message: "Registration Completed!!!!." },
+        //   data: { success: true, message: "Login Successfull.",token:"asfgh", userData:{name:'Awdiz', email:"awdiz@gmail.com"}},
         // };
         if (response.data.success) {
+          // localStorage.setItem("token", JSON.stringify(response.data.token));
+          LOGIN(response.data.userData);
           setUserData({
-            name: "",
             email: "",
             password: "",
-            confirmPassword: "",
           });
           toast.success(response.data.message);
-          router("/login");
+          router("/");
         }
       } catch (error) {
         toast.error(error.response.data.message);
       }
-    }else{
-        alert("All fields are required")
+    } else {
+      alert("All fields are required");
     }
   }
   return (
     <div>
-      <h1>Register</h1>
+      <h1>Login</h1>
       <form onSubmit={handleSubmit}>
-        <label>Name:</label>
-        <br />
-        <input
-          type="text"
-          name="name"
-          value={userData.name}
-          onChange={handleChange}
-          required
-        />
         <br />
         <label>Email:</label>
         <br />
@@ -80,20 +70,11 @@ function Register() {
           required
         />
         <br />
-        <label>Confirm Password:</label>
         <br />
-        <input
-          type="password"
-          name="confirmPassword"
-          value={userData.confirmPassword}
-          onChange={handleChange}
-          required
-        />
-        <br />
-        <input type="submit" value="Register" />
+        <input type="submit" value="Login" />
       </form>
     </div>
   );
 }
 
-export default Register;
+export default Login;

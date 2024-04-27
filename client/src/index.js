@@ -7,9 +7,13 @@ import { BrowserRouter } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast'
 import { Provider } from 'react-redux';
 import store from './components/02-03/redux/Action/Store';
+import ProvideCounterContext from './components/02-03/context/CounterContext';
+import AuthContextProvider from './components/02-03/context/AuthContext';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter >
+  <AuthContextProvider>
+  <ProvideCounterContext>
   <Toaster
   position="top-center"
   reverseOrder={false}
@@ -40,6 +44,8 @@ root.render(
     <App />
     </Provider>
   </React.StrictMode>
+  </ProvideCounterContext>
+  </AuthContextProvider>
   </BrowserRouter>
 );
 
