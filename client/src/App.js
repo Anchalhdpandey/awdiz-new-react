@@ -24,6 +24,7 @@ import NotFound from "./components/Notfound";
 import FakeStoreSingleProduct from "./components/16-03/FakeStoreSingleProducts";
 import PropFilter from "./components/PropFilter";
 import Navbar2 from "./components/Navbar";
+import AddProduct from "./components/09-05/AddProduct";
 
 
 function App() {
@@ -144,6 +145,7 @@ function App() {
             />
           }
         />
+        <Route path="/add-product" element={<AddProduct/>}/>
         </Routes>
     </div>
   );

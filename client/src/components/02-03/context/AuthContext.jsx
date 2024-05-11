@@ -33,12 +33,12 @@ const AuthContextProvider = ({ children }) => {
       console.log(error);
     }
   }
-  useEffect(() => {
-    const token = JSON.parse(localStorage.getItem("token"));
-    if (token) {
-      getUserData(token);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const token = JSON.parse(localStorage.getItem("token"));
+  //   if (token) {
+  //     getUserData(token);
+  //   }
+  // }, []);
   // reducer function hai, initialstate object h
 
   return (
