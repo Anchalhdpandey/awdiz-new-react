@@ -1,19 +1,33 @@
-import { useState } from "react";
+import axios from "axios";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import axios from "axios";
+// import api from "../../../AxiosConfig";
+import { AuthContext } from "../context/AuthContext";
+import api from "../../../AxiosConfig";
 
 function Register() {
   const router = useNavigate();
+  const { state } = useContext(AuthContext);
+
   const [userData, setUserData] = useState({
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
+    role: "buyer",
   });
+  // userData.name
+  // userData[name]
   console.log(userData, "userData");
+
   function handleChange(event) {
+    // console.log(event.target.value, event.target.name)
     setUserData({ ...userData, [event.target.name]: event.target.value });
+  }
+
+  function handleSelect(event) {
+    setUserData({ ...userData, ["role"]: event.target.value });
   }
 
   async function handleSubmit(event) {
@@ -24,17 +38,20 @@ function Register() {
       userData.password &&
       userData.confirmPassword
     ) {
+      // await calling backend one server to another server request, backend validation, data to store mongodb
       try {
-        const response = await axios.post('http://localhost:3001/api/v1/auth/register', { userData })
-        // const response = {
-        //   data: { success: true, message: "Registration Completed!!!!." },
-        // };
+        const response = await api.post("/api/v1/user/register", {
+          userData,
+        });
+        // const response = { data: { success: true, message: "Registeration Completed." } }
+        // return res.status(201).json({ success: true, message: "Registeration Completed." })
         if (response.data.success) {
           setUserData({
             name: "",
             email: "",
             password: "",
             confirmPassword: "",
+            role: "buyer",
           });
           toast.success(response.data.message);
           router("/login");
@@ -42,15 +59,26 @@ function Register() {
       } catch (error) {
         toast.error(error.response.data.message);
       }
-    }else{
-        alert("All fields are required")
+    } else {
+      alert("All fields are required.");
     }
   }
+
+  useEffect(() => {
+    if (state && state?.user?.role !== undefined) {
+      if (state?.user?.role === "buyer") {
+        router("/");
+      } else {
+        router("/seller");
+      }
+    }
+  }, [state]);
+
   return (
     <div>
       <h1>Register</h1>
       <form onSubmit={handleSubmit}>
-        <label>Name:</label>
+        <label>Name : </label>
         <br />
         <input
           type="text"
@@ -60,7 +88,7 @@ function Register() {
           required
         />
         <br />
-        <label>Email:</label>
+        <label>Email : </label>
         <br />
         <input
           type="email"
@@ -70,7 +98,7 @@ function Register() {
           required
         />
         <br />
-        <label>Password:</label>
+        <label>Password : </label>
         <br />
         <input
           type="password"
@@ -80,7 +108,7 @@ function Register() {
           required
         />
         <br />
-        <label>Confirm Password:</label>
+        <label>Confirm Password : </label>
         <br />
         <input
           type="password"
@@ -90,8 +118,14 @@ function Register() {
           required
         />
         <br />
+        <select onChange={handleSelect}>
+          <option value="buyer">Buyer</option>
+          <option value="seller">Seller</option>
+        </select>
+        <br />
         <input type="submit" value="Register" />
       </form>
+      <button onClick={() => router("/login")}>Login ?</button>
     </div>
   );
 }

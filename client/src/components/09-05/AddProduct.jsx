@@ -23,7 +23,7 @@ const handleChange=(event)=>{
   const handleSubmit=async(event)=>{
     try{
     event.preventDefault();
-    const response=await axios.post("http://localhost:3001/add-product",{
+    const response=await axios.post("/api/v1/product/add-product",{
         productData, userId:"66372bd16a12516b2d9c5142",
     });
     if(response.data.success){

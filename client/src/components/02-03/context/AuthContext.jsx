@@ -23,7 +23,7 @@ const AuthContextProvider = ({ children }) => {
   }
   async function getUserData() {
     try {
-      const response = await axios.get("http://localhost:3001/api/v1/auth/validate-token", {
+      const response = await axios.get("/api/v1/product/validate-token", {
         withCredentials: true,
       });
       if (response.data.success) {
@@ -33,12 +33,9 @@ const AuthContextProvider = ({ children }) => {
       console.log(error);
     }
   }
-  // useEffect(() => {
-  //   const token = JSON.parse(localStorage.getItem("token"));
-  //   if (token) {
-  //     getUserData(token);
-  //   }
-  // }, []);
+  useEffect(() => {
+      getUserData();
+  }, []);
   // reducer function hai, initialstate object h
 
   return (
